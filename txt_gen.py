@@ -7,7 +7,7 @@ client = genai.Client()
 prompt = input("Enter your prompt: ")
 image = Image.open("img/cat.jpg")
 
-response = client.models.generate_content(
+response = client.models.generate_content_stream(
     model = 'gemini-2.5-flash',
     contents = [image, prompt],
     config = types.GenerateContentConfig(
@@ -16,4 +16,7 @@ response = client.models.generate_content(
     )
 )
 
-print(response.text)
+for chunk in response:
+    print(chunk.text, end="---\n---")
+
+# print(response.text)
